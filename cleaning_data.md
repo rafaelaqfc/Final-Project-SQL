@@ -1,8 +1,329 @@
-What issues will you address by cleaning the data?
+# Data cleaning: What issues will you address by cleaning the data?
+
+Some issues that were addressed during the data cleaning:
+1. Understanding the data: does the data make sense? For that, I retrieved some data to try to understand a little more about it.
+
+2. Filtering columns to identify missing and NULL values: are there any missing values or rows empty in the columns? This step involved cleaning up NULL or empty values, reordening the table in a more logical away (for example, on the table "all_sessions" I added all the columns related to revenue and prices on the left side together and not spread out and the ones with geographic information of the costumer on the right side closer to their id) removing the excess of zeros of the unit_price from analytics table, deleting some columns with no values added, such as: search_keyword, product_refund_amount, product_variant, item_quantity, item_revenue (the table is now with 31 columns). Also, from analytics table, the user_id colum was deleted because it only had null values (the table is now with 13 columns). 
+
+3. Renaming other columns considering the consistency of the naming convetion between the tables database. So, even though most of them was renamed before imported (when they were in the spreadsheets), other were renamed again during the cleaning of the tables with SQL queries.
+
+# Queries: what queries were used to clean up the date? 
+
+These were the queries used to clean up the data followed by comments:
+
+-- First, it was chceked the information of the all_sessions table to see if they match with the spreadsheet (for example, 32 columns and 15134 rows).
+
+SELECT * 
+	FROM all_sessions;
+	
+SELECT COUNT(*) 
+	FROM all_sessions;
+	
+SELECT channel_grouping, country, v2_product_category 
+	FROM all_sessions 
+	GROUP BY channel_grouping, country, v2_product_category 
+	ORDER BY country
+	LIMIT 20;
+
+-- Second, it was performed the same query, but with the other tables: (e.g., analytics was matched with 14 columns and 1048575 rows, 7 columns and 1092 rows in the products table, 8 columns and 454 rows in sales_report, and 2 columns and 462 rows in sales_by_sku table).
+
+SELECT * 
+	FROM analytics;
+	
+SELECT COUNT(*) 
+	FROM analytics;
+
+SELECT * 
+	FROM products;
+	
+SELECT COUNT(*) 
+	FROM products;
+
+SELECT * 
+	FROM sales_report;
+
+SELECT COUNT(*) 
+	FROM sales_report;  
+
+SELECT * 
+	FROM sales_by_sku;  
+
+SELECT COUNT(*)  
+	FROM sales_by_sku;
+
+-- Third, in order to identify if there are any NULL values in our tables, we used the COUNT(*) function to make sure if there are any rows NULL:
+
+filling this space with the integer 0 (for example, only 81 rows are filled out with the total revenue amount in the all_sessions table). 
+
+SELECT COUNT(total_transactions_revenue) AS total_transactions_revenue
+	FROM all_sessions
+	WHERE total_transactions_revenue IS NOT NULL; 
+
+SELECT COUNT(transactions) As transactions
+	FROM all_sessions
+	WHERE transactions IS NOT NULL;
+
+SELECT COUNT(session_quality_dim) AS session_quality
+	FROM all_sessions
+	WHERE session_quality_dim IS NOT NULL;
+	
+SELECT COUNT(product_refund_amount) AS product_refund
+	FROM all_sessions
+	WHERE product_refund_amount IS NOT NULL;
+	
+SELECT COUNT(product_quantity) AS product_quantity
+	FROM all_sessions
+	WHERE product_quantity IS NOT NULL;	
+	
+SELECT COUNT(product_revenue) AS product_revenue
+	FROM all_sessions
+	WHERE product_revenue IS NOT NULL;	
+	
+SELECT COUNT(item_quantity) AS item_quantity
+	FROM all_sessions
+	WHERE product_revenue IS NOT NULL;
+	
+SELECT COUNT(item_revenue) AS item_revenue
+	FROM all_sessions
+	WHERE item_revenue IS NOT NULL;			
+
+SELECT COUNT(transaction_revenue) AS transaction_revenue
+	FROM all_sessions
+	WHERE transaction_revenue IS NOT NULL;	
+	
+SELECT COUNT(transaction_id) AS transaction_id
+	FROM all_sessions
+	WHERE transaction_id IS NOT NULL;	
+	
+SELECT COUNT(ecommerce_action_option) AS ecommerce_action_option
+	FROM all_sessions
+	WHERE ecommerce_action_option IS NOT NULL;	
+
+ -- Then, it was deleted some columns with empty values in all rows from the table all_sessions:
+
+ ALTER TABLE public.all_sessions
+    DROP COLUMN search_keyword, 
+                product_refund_amount, 
+                product_variant, 
+                item_quantity, 
+                item_revenue;
+
+-- Afterwards, we checked the possibility of changing the rows that were NULL in the columns which had some data filled ou on it. This was done with the COALESCE function, firstly, and then with the UPDATE function. We filled out the rows whose data type was an integer with 0 and 'N/A with the ones that were VARCHAR.
+
+SELECT COALESCE(total_transactions_revenue, 0)
+    FROM all_sessions
+    WHERE total_transactions_revenue IS NULL;
+
+SELECT COALESCE(session_quality_dim, 0)
+    FROM all_sessions
+    WHERE session_quality_dim IS NULL;
+
+SELECT COALESCE(transactions, 0)
+    FROM all_sessions
+    WHERE transactions IS NULL;
+
+SELECT COALESCE(product_revenue, 0)
+    FROM all_sessions
+    WHERE product_revenue IS NULL;
+
+SELECT COALESCE(ecommerce_action_option, 0)
+    FROM all_sessions
+    WHERE ecommerce_action_option IS NULL;
+
+SELECT COALESCE(transaction_id, 0)
+    FROM all_sessions
+    WHERE transaction_id IS NULL;
+
+SELECT COALESCE(product_quantity , 0)
+    FROM all_sessions
+    WHERE product_quantity IS NULL;
+
+-- With this analyze, the cleaning was proceded and we could visualize a cleaner and logic table with the query below (for example, 81 rows were filled out with 0 to substitute the NULL value in the total revenue amount column in the all_sessions table), but so much more was done under the other columns:
+
+UPDATE all_sessions  
+	SET total_transactions_revenue = 0  
+	WHERE  
+	total_transactions_revenue IS NULL; 
+
+UPDATE all_sessions  
+	SET session_quality_dim = 0   
+    WHERE  
+    session_quality_dim IS NULL; 
+
+UPDATE all_sessions  
+	SET transactions = 0   
+    WHERE  
+    transactions IS NULL; 
+
+ UPDATE all_sessions  
+	SET product_revenue = 0   
+    WHERE  
+    product_revenue IS NULL;      
+
+UPDATE all_sessions  
+	SET ecommerce_action_option = 'N/A'   
+    WHERE  
+    ecommerce_action_option IS NULL; 
+
+UPDATE all_sessions  
+	SET transaction_id = 'N/A'   
+    WHERE  
+    transaction_id IS NULL;
+
+UPDATE all_sessions  
+	SET product_quantity = 0   
+    WHERE  
+    product_quantity IS NULL;
+
+-- From that on, it was important to start cleaning up the analytics table.
+
+SELECT * 
+	FROM analytics;
+
+SELECT user_id
+	FROM analytics;
+	
+SELECT COUNT(user_id)
+	FROM analytics 
+	WHERE user_id IS NOT NULL;
+
+SELECT COUNT(units_sold)
+	FROM analytics 
+	WHERE units_sold IS NOT NULL;
+
+SELECT COUNT(time_on_site)
+	FROM analytics 
+	WHERE time_on_site IS NOT NULL;
+
+SELECT COUNT(revenue)
+	FROM analytics 
+	WHERE revenue IS NOT NULL;
+	
+ALTER TABLE public.analytics 
+    DROP COLUMN user_id;
+
+SELECT *
+	FROM analytics;
+
+-- Again, it was used the UPDATE funtion to write the integer 0 in the rows previously marked as NULL in the column units_sold, initially, and in other columns such as bounces and revenue:
+
+UPDATE analytics  
+    SET units_sold = 0  
+    WHERE  
+    units_sold IS NULL;  
+
+UPDATE analytics  
+    SET bounces = 0  
+    WHERE  
+    bounces IS NULL;  
+
+UPDATE analytics  
+    SET revenue = 0  
+    WHERE  
+    revenue IS NULL; 
+
+-- Just to confirm the modifications were done:
+
+SELECT *
+	FROM analytics;
+
+-- Now, I came back to the columsn names of the tables to check them if they would need to be renamed:
+
+SELECT *
+	FROM analytics;
+
+ALTER TABLE public.analytics
+	RENAME COLUMN unit_price TO unit_cost; 
+		
+SELECT * 
+ 	FROM all_sessions;
+	
+SELECT v2_product_name 
+ 	FROM all_sessions;
+	
+ALTER TABLE public.all_sessions
+	RENAME COLUMN v2_product_name TO product_name; 
+	
+SELECT v2_product_category
+ 	FROM all_sessions;
+	
+ALTER TABLE public.all_sessions
+	RENAME COLUMN v2_product_category TO product_category; 	
+
+-- Also, it was cleaned up the excess of zeros of the old unit_price column already settep up as unit_cost (it looks like it was addeed an irregular amount of zeros in each unit price). Both queries were tried and retrieved the same results:
+
+SELECT div(unit_cost, 1000000)
+    FROM analytics;
+
+SELECT unit_cost / 1000000
+    FROM analytics
+	GROUP BY unit_price;
+
+SELECT div(unit_cost, 1000000)
+    FROM analytics;
+
+SELECT unit_cost / 1000000
+    FROM analytics
+	GROUP BY unit_price;
+
+SELECT s.country, s.product_price, a.unit_cost 
+	FROM all_sessions s
+	JOIN analytics a
+	ON s.visit_id = a.visit_id
+	GROUP BY s.country, s.product_price, a.unit_cost;
+
+SELECT s.country, 
+	s.product_price / 1000000 AS product_price, 
+	s.product_revenue, 
+	a.unit_cost / 1000000 AS unit_cost, 
+	a.revenue 
+	FROM all_sessions s
+	LEFT JOIN analytics a
+	ON s.visit_id = a.visit_id
+	GROUP BY s.country, s.product_price, s.product_revenue, a.unit_cost, a.revenue
+	ORDER BY country;
+
+-- By joining these tables to visualize their values and the way the prices were formatted, I noticced some NULL values that weren't noticed before under unit_cost and revenue columns. They didn't have much of rows with NULL values, but I decided to proceed to substitue the revenue and unit_cost NULL value rows by the interger 0.
+
+SELECT * 
+	FROM all_sessions;
+	
+SELECT * 
+	FROM analytics;
+	
+SELECT COUNT(unit_cost) 
+	FROM analytics
+	WHERE unit_cost IS NOT NULL;
+	
+UPDATE analytics  
+    SET unit_cost = 0  
+    WHERE  
+    unit_cost IS NULL;
+
+UPDATE analytics
+    SET revenue = 0  
+    WHERE
+	revenue IS NULL;
+
+SELECT * 
+	FROM products;
+	
+SELECT COUNT(sentiment_score)
+	FROM products
+	WHERE sentiment_score IS NOT NULL;
+
+-- Join tables (sentiment_magnitude) ??
+check nulls in others saLes_report and products
 
 
 
 
 
-Queries:
-Below, provide the SQL queries you used to clean your data.
+
+
+
+
+
+	
+
+

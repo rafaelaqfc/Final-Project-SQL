@@ -1,7 +1,7 @@
 # Final-Project-Transforming-and-Analyzing-Data-with-SQL
 
 ## Project/Goals
-This project has the main purpose to practice data cleaning, tranforming and analysing data in SQL. 
+This project has the main purpose to practice data cleaning, tranforming and analysing data with SQL. 
 
 ## Process
 Steps to follow:
@@ -74,12 +74,13 @@ Does the results after cleaning and transforming the data making sense?
 Are there rowms owith NULLs value?
 
 
-
 ## Results
 (fill in what you discovered this data could tell you and how you used the data to answer those questions)
 
 ## Challenges 
-(discuss challenges you faced in the project)
+One of the first chellengess I encountered in this assignment was related to the .csv file which has to be imported to my workbench. After a while, the solution was to convert to a .csvUTF-8 file to be properly imported in my workbench, because this second one is delimetted by commas.
+
+The second challengee was related to the short time to do the analyze of the database: I spent most of my time trying to undertand the type of the file before importing the spreadsheets and, after that, in the cleaning. Also, some NULL values were hidden and I could only see them through joining tables, for example, when I thought that I was done the cleaning. Therefore, it looks like the cleaning almost never ends!
 
 ## Future Goals
 (what would you do if you had more time?)
