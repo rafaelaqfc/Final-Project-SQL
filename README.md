@@ -9,8 +9,7 @@ Steps to follow:
 1. Extract data (import the spreadsheets of 5 tables from ecommerce database to PgAdmin)
 all_sessions spreadsheet:
 
-15135 rows in the all_sessions spreadsheet 
-33 columns
+
 
 productRefundAmount empty
 productQuantity empty
@@ -23,8 +22,7 @@ eCommerceAction_option
 
 analytics spreadsheet
 
-14 columns
-1048575
+
 
 userid empty
 units_sold empty
@@ -33,20 +31,16 @@ revenue empty
 
 products spreadsheet
 
-7 columns
-1093 rows
+
 no column has a null value or is empty
 
 sales_by_sku
 
-2 columns
-463 rows
+
 no column has a null value or is empty
 
 sales_record
 
-8 columns
-455 rows
 
 As we know, just having a look at the results of my queries is not enough to confirm that our data is correct to be analyzed. So, our QA (Quality Assurance) strategies involved:
   
@@ -77,13 +71,13 @@ Are there rowms owith NULLs value?
 (fill in what you discovered this data could tell you and how you used the data to answer those questions)
 
 ## Challenges 
-One of the first chellengess I encountered in this assignment was related to the .csv file which has to be imported to my workbench. After a while, the solution was to convert to a .csvUTF-8 file to be properly imported in my workbench, because this second one is delimetted by commas.
+One of the first challengess I encountered in this assignment was related to the .csv file which has to be imported to my workbench. After a while, the solution was to convert to a .csvUTF-8 file to be properly imported in my workbench, because this second one is delimetted by commas.
 
 The second challengee was related to the short time to do the analyze of the database: I spent most of my time trying to undertand the type of the file before importing the spreadsheets and, after that, in the cleaning. Also, some NULL values were hidden and I could only see them through joining tables, for example, when I thought that I was done the cleaning. Therefore, it looks like the cleaning almost never ends!
 
+Random data and it looked like that didn't have any semantic content at all
 
 I used CAST function and after created a table with its new data type already. .......
-
 
 ## Future Goals
 (what would you do if you had more time?)

@@ -1,17 +1,28 @@
 # Data cleaning: What issues will you address by cleaning the data?
 
-Some issues that were addressed during the data cleaning:
-1. Understanding the data: does the data make sense? For that, I retrieved some data to try to understand a little more about it.
+This is a summary of the issues that were addressed during the data cleaning:
 
-2. Filtering columns to identify missing and NULL values: are there any missing values or rows empty in the columns? This step involved cleaning up NULL or empty values, reordening the table in a more logical away (for example, on the table "all_sessions" I added all the columns related to revenue and prices on the left side together and not spread out and the ones with geographic information of the costumer on the right side closer to their id) removing the excess of zeros of the unit_price from analytics table, deleting some columns with no values added, such as: search_keyword, product_refund_amount, product_variant, item_quantity, item_revenue (the table is now with 31 columns). Also, from analytics table, the user_id colum was deleted because it only had null values (the table is now with 13 columns). 
+1. Initially, it is important to understandthe data and to see if it really does make sense. For that first part, I retrieved some data and started to have a look at them to see if I can understand a little bit more about it.
 
-3. Renaming other columns considering the consistency of the naming convetion between the tables database and creating common keys between a new table called "price" with others. So, even though most of the columns were renamed before imported (when they were in the spreadsheets), others were renamed again during the cleaning of the tables with SQL queries.
+2. After exploring the data, I had the impression that most of the columns had missing, empty or NULL values. Then, I started to filtering columns to identify the NULL values. This step tooked most of my hours and involved:
+2.1 cleaning up NULL or empty values, especially from "all_sessions" and "analytics" tables, 
+2.2 removing the excess of zeros of the "unit_price" column - which had its name altered to "unit_cost" (from "analytics" table),
+2.3 deleting some columns with no values added, such as: "search_keyword", "product_refund_amount", "product_variant", "item_quantity", "item_revenue" - all of them were from "all_sessions" table, and the "user_id" column, from "analytics" table, was also deleted because it only had null values.
 
-# Queries: what queries were used to clean up the date? 
+3. Part of the data cleaning involved using the CAST function to check the datatype in SELECT statements to run some queries before altering the datatype of some columns. Also, because of that part of the data cleaning, a new table called "price" was created after within already the FLOAT datatype which helped me to perform the correction of the "unit_cost" and "product_price" values;
 
-These were the queries used to clean up the data followed by comments:
+4. Also, the process of renaming some columns with SQL queries was also performed. Even thought I did a bit of cleaning in the spreadsheets before (e.g. double and single quotes were removed and also some columns renamed there in order to change the column table names in a more consistent naming convention before importing them to the PgAdmin), other columns had their names changed afterwards when needed. Besides, I tried to preserve the naming convetion between the tables database.
 
--- First, it was chceked the information of the all_sessions table to see if they match with the spreadsheet (for example, 32 columns and 15134 rows).
+5. Finally, I made sure there were common keys between the tables and created a column with a foreing key in the "rpice" table. 
+
+6. Just as a quick addendum, even though I noticed that some of the values between the columsn weren't matching from similar columns in other tables, I found better to maintain them. This also lead me to think that most of them could be randomly put together.
+
+
+# Queries: what queries were used to clean up the data? 
+
+These were the queries mostly used to clean up the data followed by comments (the queries to create the tables initially in the PgAdmin weren't added here):
+
+-- First, it was chceked the information of the "all_sessions" table to see if it matched with the raw data in the spreadsheet (for example, 32 columns and 15134 rows):
 
 SELECT * 
 	FROM all_sessions;
@@ -19,13 +30,15 @@ SELECT *
 SELECT COUNT(*) 
 	FROM all_sessions;
 	
-SELECT channel_grouping, country, v2_product_category 
+SELECT channel_grouping, 
+    country, 
+    v2_product_category 
 	FROM all_sessions 
 	GROUP BY channel_grouping, country, v2_product_category 
 	ORDER BY country
 	LIMIT 20;
 
--- Second, it was performed the same query, but with the other tables: (e.g., analytics was matched with 14 columns and 1048575 rows, 7 columns and 1092 rows in the products table, 8 columns and 454 rows in sales_report, and 2 columns and 462 rows in sales_by_sku table).
+-- Second, it was performed the same query, but with the other tables (e.g., "analytics" was matched with 14 columns and 1048574 rows, "products" was matched with 7 columns and 1092 rows, "sales_record" with 8 columns and 454 rows, and "sales_by_sku" with 2 columns and 462 rows):
 
 SELECT * 
 	FROM analytics;
@@ -51,9 +64,7 @@ SELECT *
 SELECT COUNT(*)  
 	FROM sales_by_sku;
 
--- Third, in order to identify if there are any NULL values in our tables, we used the COUNT(*) function to make sure if there are any rows NULL:
-
-filling this space with the integer 0 (for example, only 81 rows are filled out with the total revenue amount in the all_sessions table). 
+-- Third, in order to identify if there were any NULL values in our tables, we used the COUNT(*) function to check the rows followed by the WHERE filtering clause:
 
 SELECT COUNT(total_transactions_revenue) AS total_transactions_revenue
 	FROM all_sessions
@@ -99,16 +110,17 @@ SELECT COUNT(ecommerce_action_option) AS ecommerce_action_option
 	FROM all_sessions
 	WHERE ecommerce_action_option IS NOT NULL;	
 
- -- Then, it was deleted some columns with empty values in all rows from the table all_sessions:
+ -- Then, it was deleted some columns with empty values in all rows from the table "all_sessions":
 
  ALTER TABLE public.all_sessions
     DROP COLUMN search_keyword, 
                 product_refund_amount, 
                 product_variant, 
                 item_quantity, 
-                item_revenue;
+                item_revenue
+;                
 
--- Afterwards, we checked the possibility of changing the rows that were NULL in the columns which had some data filled ou on it. This was done with the COALESCE function, firstly, and then with the UPDATE function. We filled out the rows whose data type was an integer with 0 and 'N/A with the ones that were VARCHAR.
+-- Afterwards, we checked the possibility of changing the rows that were NULL in the columns which had some data filled out along them. This was done with the COALESCE function, firstly, and then with the UPDATE function. We filled out the rows whose data type was an integer with 0 and a string 'N/A with the ones that were VARCHAR:
 
 SELECT COALESCE(total_transactions_revenue, 0)
     FROM all_sessions
@@ -138,7 +150,7 @@ SELECT COALESCE(product_quantity , 0)
     FROM all_sessions
     WHERE product_quantity IS NULL;
 
--- With this analyze, the cleaning was proceded and we could visualize a cleaner and logic table with the query below (for example, 81 rows were filled out with 0 to substitute the NULL value in the total revenue amount column in the all_sessions table), but so much more was done under the other columns:
+-- With this analyze, part of the cleaning was proceded and we could visualize a cleaner and logic table with the queries below (for example, 81 rows were filled out with 0 to substitute the NULL in the "total_revenue_amount" column in the "all_sessions" table), but so much more was done under the other columns:
 
 UPDATE all_sessions  
 	SET total_transactions_revenue = 0  
@@ -175,7 +187,7 @@ UPDATE all_sessions
     WHERE  
     product_quantity IS NULL;
 
--- From that on, it was important to start cleaning up the analytics table.
+-- From that on, we proceed to check and clean up also the "analytics" table:
 
 SELECT * 
 	FROM analytics;
@@ -205,7 +217,7 @@ ALTER TABLE public.analytics
 SELECT *
 	FROM analytics;
 
--- Again, it was used the UPDATE funtion to write the integer 0 in the rows previously marked as NULL in the column units_sold, initially, and in other columns such as bounces and revenue:
+-- Again, along that table ("analytics"), it was used the UPDATE function to write the integer 0 in the rows previously marked as NULL in the column "units_sold", initially, and in other columns such as "bounces" and "revenue"(the queries were done one by one in order to better visualize the columns):
 
 UPDATE all_sessions  
 	SET total_transactions_revenue = 0  
@@ -242,12 +254,12 @@ UPDATE all_sessions
     WHERE  
     product_quantity IS NULL;
 
--- Just to confirm the modifications were done:
+-- And, just to confirm if the modifications were done:
 
 SELECT *
 	FROM analytics;
 
--- Now, I came back to the columsn names of the tables to check them if they would need to be renamed:
+-- Then, I came back to the columns names of some tables to check them again if they would need to be renamed in a more consistent way (remember that I had renamed them already before creating the tables in the PgAdmin, so this was a second check to rename some of them in case it was needed):
 
 SELECT *
 	FROM analytics;
@@ -270,7 +282,7 @@ SELECT v2_product_category
 ALTER TABLE public.all_sessions
 	RENAME COLUMN v2_product_category TO product_category; 	
 
--- Also, it was cleaned up the excess of zeros of the old unit_price column already settep up as unit_cost (it looks like it was addeed an irregular amount of zeros in each unit price). Both queries were tried and retrieved the same results:
+-- Also, it was cleaned up the excess of zeros of the old "unit_price" column already set up as "unit_cost" from "analytics" (it looks like it was added an irregular amount of zeros in each unit price of the product). Those queries were tried and retrieved the same results:
 
 SELECT div(unit_cost, 1000000)
     FROM analytics;
@@ -303,9 +315,7 @@ SELECT s.country,
 	GROUP BY s.country, s.product_price, s.product_revenue, a.unit_cost, a.revenue
 	ORDER BY country;
 
-UPDATE analytics
-	SET  unit_cost = unit_cost / 1000000
-;
+-- After checking the columns "unit_cost" and "product_price" their values were updated to a better reader type format:  
 
 SELECT *
 	FROM products;
@@ -330,7 +340,7 @@ UPDATE all_sessions
 SELECT product_price 
 	FROM all_sessions;
 
--- AS I ran into some issues with my query which was ran twice by mistake, I had to create a new table with the columns unit_price and product_price and import data on them to redo my mistake. Therefore, I decided to maintain the new table called "price" in the end and to connect it 
+-- Obs.: AS I ran into some issues with my query above which was ran twice by mistake, I had to create a new table with the columns "unit_cost" and "product_cost" (previously called "unit_price" and "product_price" and import data again of them to redo my mistake. After creating the new table called "price" with those columns, I added to it 2 keys: the "full_visitor_id" (primary key) and "product_sku" (foreign key) with the INSERT INTO statement:
 
 CREATE TABLE price (
 	full_visitor_id VARCHAR,
@@ -339,8 +349,8 @@ CREATE TABLE price (
 	);
 	
 SELECT unit_price / 1000000 AS unit_cost,
-product_price / 1000000 As product_cost
-FROM price;
+    product_price / 1000000 As product_cost
+    FROM price;
 	
 UPDATE price
 SET unit_price = unit_price / 1000000
@@ -364,31 +374,32 @@ ADD COLUMN name VARCHAR
 
 SELECT * FROM price;
 
-INSERT INTO sales_by_sku(full_visitor_id)
-
-SELECT price.*, sales_by_sku.full_visitor_id
-FROM price
-LEFT JOIN sales_by_sku
-ON price.full_visitor_id = sales_by_sku.full_visitor_id;
+SELECT price.*, 
+    sales_by_sku.full_visitor_id
+    FROM price
+    LEFT JOIN sales_by_sku
+    ON price.full_visitor_id = sales_by_sku.full_visitor_id;
 
 INSERT INTO sales_by_sku (full_visitor_id)
-SELECT full_visitor_id
-FROM price;
+    SELECT full_visitor_id
+    FROM price
+;
 
 SELECT * FROM sales_by_sku
-ORDER BY full_visitor_id DESC;
+    ORDER BY full_visitor_id DESC;
 
 SELECT * FROM price;
 
 ALTER TABLE price
-ADD COLUMN product_sku VARCHAR
+    ADD COLUMN product_sku VARCHAR
 ;
 
 INSERT INTO price(product_sku)
-SELECT product_sku
-FROM sales_by_sku;
+    SELECT product_sku
+    FROM sales_by_sku
+;
 
--- By joining these tables to visualize their values and the way the prices were formatted, I noticced some NULL values that weren't noticed before under unit_cost and revenue columns. They didn't have much of rows with NULL values and I thought about replacing them with a 0 at first, but as I was not sure about this changing yet, I left it for now.
+-- By joining these tables to visualize their values and the way the prices were formatted, I noticed some NULL values that weren't noticed before under "unit_cost" and "revenue" columns. They didn't have much of rows with NULL values and I thought about replacing them with a 0 at first, but as I was not sure about this changing yet, I left it for now.
 
 SELECT * 
 	FROM all_sessions;
@@ -407,7 +418,7 @@ SELECT COUNT(sentiment_score)
 	FROM products
 	WHERE sentiment_score IS NOT NULL;
 
--- Finally, I noticed some columns had the same value in every row and it looked like they wouldn't made a difference for this project (they might be important to other ones, but it seems that not for this one). Due to tah, I decided to drop some more of them in the all_sessions table, such as: 
+-- Finally, I noticed some columns had the same value in every row and it looked like they wouldn't make any difference for this project (they might be important to other ones, but it seems that not for this one). Due to that, I decided to drop some more of them in the "all_sessions" table, such as the ones below: 
 
 SELECT COUNT(ecommerce_action_type) 
 	FROM all_sessions;
@@ -440,7 +451,7 @@ SELECT COUNT(ecommerce_action_option)
 ALTER TABLE all_sessions
 	DROP COLUMN ecommerce_action_type,
 	DROP COLUMN ecommerce_action_step,
-	DROP COLUMN  ecommerce_action_option
+	DROP COLUMN ecommerce_action_option
 ;
 
 SELECT * 
@@ -457,7 +468,8 @@ SELECT COUNT(bounces)
 	WHERE bounces = 0;
 	
 ALTER TABLE analytics
-	DROP COLUMN bounces;
+	DROP COLUMN bounces
+;
 
 SELECT * 
 	FROM products;
@@ -472,7 +484,9 @@ SELECT p.sku, s.product_sku
 	GROUP BY p.sku, s.product_sku, p.name;
 	
 ALTER TABLE products
-RENAME COLUMN sku to product_sku;
+    RENAME COLUMN sku to product_sku
+;
+
 
 
 

@@ -1,38 +1,47 @@
 Answer the following questions and provide the SQL queries used to find the answer.
-
     
 **Question 1: Which cities and countries have the highest level of transaction revenues on the site?**
 
 SQL Queries:
 
-SELECT * FROM all_sessions;
+SELECT * 
+    FROM all_sessions;
 
-SELECT COUNT(country) AS country_count, country, MAX(total_transactions_revenue / 1000) 
+SELECT COUNT(country) AS country_count, 
+    country,    
+    MAX(total_transactions_revenue / 1000) 
 FROM all_sessions
 GROUP BY country
 ORDER BY MAX(total_transactions_revenue) DESC
 LIMIT 10;
 
-SELECT COUNT(city) AS city_count, city, MAX(total_transactions_revenue / 1000) 
+SELECT COUNT(city) AS city_count, 
+    city, 
+    MAX(total_transactions_revenue / 1000) 
 FROM all_sessions
 GROUP BY city
 ORDER BY MAX(total_transactions_revenue) DESC
 LIMIT 10;
 
 SELECT MAX(total_transactions_revenue)
-FROM all_sessions
+FROM all_sessions;
 
-SELECT units_sold, revenue 
+SELECT units_sold, 
+    revenue 
 FROM analytics
 GROUP BY units_sold, revenue
 ORDER BY revenue DESC;
 
-SELECT country, city, MAX(total_transactions_revenue)
+SELECT country, 
+    city, 
+    MAX(total_transactions_revenue)
 FROM all_sessions
 GROUP BY country, city, total_transactions_revenue
 ORDER BY total_transactions_revenue DESC;
 
-SELECT country, city, MAX(total_transactions_revenue)
+SELECT country, 
+    city,
+    MAX(total_transactions_revenue)
 FROM all_sessions
 WHERE country = 'United States'
 GROUP BY country, city, total_transactions_revenue
