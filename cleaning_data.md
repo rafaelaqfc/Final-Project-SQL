@@ -207,20 +207,40 @@ SELECT *
 
 -- Again, it was used the UPDATE funtion to write the integer 0 in the rows previously marked as NULL in the column units_sold, initially, and in other columns such as bounces and revenue:
 
-UPDATE analytics  
-    SET units_sold = 0  
-    WHERE  
-    units_sold IS NULL;  
+UPDATE all_sessions  
+	SET total_transactions_revenue = 0  
+	WHERE  
+	total_transactions_revenue IS NULL; 
 
-UPDATE analytics  
-    SET bounces = 0  
+UPDATE all_sessions  
+	SET session_quality_dim = 0   
     WHERE  
-    bounces IS NULL;  
+    session_quality_dim IS NULL; 
 
-UPDATE analytics  
-    SET revenue = 0  
+UPDATE all_sessions  
+	SET transactions = 0   
     WHERE  
-    revenue IS NULL; 
+    transactions IS NULL; 
+
+ UPDATE all_sessions  
+	SET product_revenue = 0   
+    WHERE  
+    product_revenue IS NULL;      
+
+UPDATE all_sessions  
+	SET ecommerce_action_option = 'N/A'   
+    WHERE  
+    ecommerce_action_option IS NULL; 
+
+UPDATE all_sessions  
+	SET transaction_id = 'N/A'   
+    WHERE  
+    transaction_id IS NULL;
+
+UPDATE all_sessions  
+	SET product_quantity = 0   
+    WHERE  
+    product_quantity IS NULL;
 
 -- Just to confirm the modifications were done:
 
@@ -283,7 +303,84 @@ SELECT s.country,
 	GROUP BY s.country, s.product_price, s.product_revenue, a.unit_cost, a.revenue
 	ORDER BY country;
 
--- By joining these tables to visualize their values and the way the prices were formatted, I noticced some NULL values that weren't noticed before under unit_cost and revenue columns. They didn't have much of rows with NULL values, but I decided to proceed to substitue the revenue and unit_cost NULL value rows by the interger 0.
+UPDATE analytics
+	SET  unit_cost = unit_cost / 1000000
+;
+
+SELECT *
+	FROM products;
+
+SELECT *
+	FROM analytics;
+
+UPDATE analytics
+	SET unit_cost = unit_cost / 1000000
+;
+
+SELECT unit_cost
+	FROM analytics; 
+
+SELECT product_price
+	FROM all_sessions;
+
+UPDATE all_sessions
+	SET product_price = product_price / 1000000
+;
+
+SELECT product_price 
+	FROM all_sessions;
+
+-- AS I ran into some issues with my query which was ran twice by mistake, I had to create a new table with the columns unit_price and product_price and import data on them to redo my mistake. Therefore, I decided to maintain the new table called "price" in the end and to connect it 
+
+CREATE TABLE price (
+	full_visitor_id VARCHAR,
+	unit_price FLOAT,
+	product_price FLOAT
+	);
+	
+SELECT unit_price / 1000000 AS unit_cost,
+product_price / 1000000 As product_cost
+FROM price;
+	
+UPDATE price
+SET unit_price = unit_price / 1000000
+;
+
+ALTER TABLE price
+RENAME COLUMN unit_price TO unit_cost
+;
+
+UPDATE price  
+SET product_price = product_price / 1000000
+;
+
+ALTER TABLE price
+RENAME COLUMN product_price TO product_cost
+;
+
+ALTER TABLE price
+ADD COLUMN name VARCHAR
+;
+
+SELECT * FROM price;
+
+INSERT INTO sales_by_sku(full_visitor_id)
+
+SELECT price.*, sales_by_sku.full_visitor_id
+FROM price
+LEFT JOIN sales_by_sku
+ON price.full_visitor_id = sales_by_sku.full_visitor_id;
+
+INSERT INTO sales_by_sku (full_visitor_id)
+SELECT full_visitor_id
+FROM price;
+
+SELECT * FROM sales_by_sku
+ORDER BY full_visitor_id DESC;
+
+SELECT * FROM price;
+
+-- By joining these tables to visualize their values and the way the prices were formatted, I noticced some NULL values that weren't noticed before under unit_cost and revenue columns. They didn't have much of rows with NULL values and I thought about replacing them with a 0 at first, but as I was not sure about this changing yet, I left it for now.
 
 SELECT * 
 	FROM all_sessions;
@@ -294,16 +391,6 @@ SELECT *
 SELECT COUNT(unit_cost) 
 	FROM analytics
 	WHERE unit_cost IS NOT NULL;
-	
-UPDATE analytics  
-    SET unit_cost = 0  
-    WHERE  
-    unit_cost IS NULL;
-
-UPDATE analytics
-    SET revenue = 0  
-    WHERE
-	revenue IS NULL;
 
 SELECT * 
 	FROM products;
@@ -312,8 +399,74 @@ SELECT COUNT(sentiment_score)
 	FROM products
 	WHERE sentiment_score IS NOT NULL;
 
--- Join tables (sentiment_magnitude) ??
-check nulls in others saLes_report and products
+-- Finally, I noticed some columns had the same value in every row and it looked like they wouldn't made a difference for this project (they might be important to other ones, but it seems that not for this one). Due to tah, I decided to drop some more of them in the all_sessions table, such as: 
+
+SELECT COUNT(ecommerce_action_type) 
+	FROM all_sessions;
+
+SELECT ecommerce_action_type 
+	FROM all_sessions
+	WHERE ecommerce_action_type = 0;
+	
+SELECT COUNT(ecommerce_action_type) 
+	FROM all_sessions
+	WHERE ecommerce_action_type = 0;
+
+SELECT ecommerce_action_step 
+	FROM all_sessions;
+	
+SELECT COUNT(ecommerce_action_step) 
+	FROM all_sessions;
+
+SELECT COUNT(ecommerce_action_step) 
+	FROM all_sessions
+	WHERE ecommerce_action_step = 1;
+	
+SELECT ecommerce_action_option 
+	FROM all_sessions;
+	
+SELECT COUNT(ecommerce_action_option) 
+	FROM all_sessions
+	WHERE ecommerce_action_otpion = N/A;
+
+ALTER TABLE all_sessions
+	DROP COLUMN ecommerce_action_type,
+	DROP COLUMN ecommerce_action_step,
+	DROP COLUMN  ecommerce_action_option
+;
+
+SELECT * 
+	FROM all_sessions;
+	
+SELECT * 
+	FROM analytics;
+	
+SELECT bounces
+	FROM analytics;
+	
+SELECT COUNT(bounces) 
+	FROM analytics
+	WHERE bounces = 0;
+	
+ALTER TABLE analytics
+	DROP COLUMN bounces;
+
+SELECT * 
+	FROM products;
+	
+SELECT * 
+	FROM sales_report;
+	
+SELECT p.sku, s.product_sku
+	FROM products p
+	LEFT JOIN sales_report s
+	ON p.name = s.name
+	GROUP BY p.sku, s.product_sku, p.name;
+	
+ALTER TABLE products
+RENAME COLUMN sku to product_sku;
+
+
 
 
 

@@ -35,6 +35,8 @@ Answer: From that on, we can see the visitor id number "1498662260" spent
 
 
 
+
+
 Question 3: 
 
 SQL Queries:
