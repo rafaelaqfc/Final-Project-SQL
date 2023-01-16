@@ -60,7 +60,6 @@ UTF8csv file converted
 Second, I created some hypothesis of my research based on what is my main interest on this data. 
 In the second place, 
 
-
 3. Load data into a database
 
 4, Develop and implement a QA process to validate transformed data against raw data
@@ -81,6 +80,10 @@ Are there rowms owith NULLs value?
 One of the first chellengess I encountered in this assignment was related to the .csv file which has to be imported to my workbench. After a while, the solution was to convert to a .csvUTF-8 file to be properly imported in my workbench, because this second one is delimetted by commas.
 
 The second challengee was related to the short time to do the analyze of the database: I spent most of my time trying to undertand the type of the file before importing the spreadsheets and, after that, in the cleaning. Also, some NULL values were hidden and I could only see them through joining tables, for example, when I thought that I was done the cleaning. Therefore, it looks like the cleaning almost never ends!
+
+
+I used CAST function and after created a table with its new data type already. .......
+
 
 ## Future Goals
 (what would you do if you had more time?)

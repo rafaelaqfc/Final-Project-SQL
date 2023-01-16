@@ -5,7 +5,7 @@ Some issues that were addressed during the data cleaning:
 
 2. Filtering columns to identify missing and NULL values: are there any missing values or rows empty in the columns? This step involved cleaning up NULL or empty values, reordening the table in a more logical away (for example, on the table "all_sessions" I added all the columns related to revenue and prices on the left side together and not spread out and the ones with geographic information of the costumer on the right side closer to their id) removing the excess of zeros of the unit_price from analytics table, deleting some columns with no values added, such as: search_keyword, product_refund_amount, product_variant, item_quantity, item_revenue (the table is now with 31 columns). Also, from analytics table, the user_id colum was deleted because it only had null values (the table is now with 13 columns). 
 
-3. Renaming other columns considering the consistency of the naming convetion between the tables database. So, even though most of them was renamed before imported (when they were in the spreadsheets), other were renamed again during the cleaning of the tables with SQL queries.
+3. Renaming other columns considering the consistency of the naming convetion between the tables database and creating common keys between a new table called "price" with others. So, even though most of the columns were renamed before imported (when they were in the spreadsheets), others were renamed again during the cleaning of the tables with SQL queries.
 
 # Queries: what queries were used to clean up the date? 
 
