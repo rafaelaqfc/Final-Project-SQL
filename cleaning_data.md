@@ -380,6 +380,14 @@ ORDER BY full_visitor_id DESC;
 
 SELECT * FROM price;
 
+ALTER TABLE price
+ADD COLUMN product_sku VARCHAR
+;
+
+INSERT INTO price(product_sku)
+SELECT product_sku
+FROM sales_by_sku;
+
 -- By joining these tables to visualize their values and the way the prices were formatted, I noticced some NULL values that weren't noticed before under unit_cost and revenue columns. They didn't have much of rows with NULL values and I thought about replacing them with a 0 at first, but as I was not sure about this changing yet, I left it for now.
 
 SELECT * 
