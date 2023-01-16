@@ -204,6 +204,20 @@ GROUP BY country,
 		total_transactions_revenue
 ORDER BY total_revenue DESC;
 
+SELECT country, 
+		SUM(total_transactions_revenue) AS total_revenue
+FROM all_sessions
+WHERE total_transactions_revenue != 0
+GROUP BY country
+ORDER BY total_revenue DESC;
+
+SELECT city, 
+		SUM(total_transactions_revenue) AS total_revenue
+FROM all_sessions
+WHERE total_transactions_revenue != 0
+GROUP BY city
+ORDER BY total_revenue DESC;
+
 SELECT country,
         city, 
         SUM(transaction_revenue) AS transaction_revenue,
@@ -228,44 +242,8 @@ GROUP BY country,
 		total_transactions_revenue
 ORDER BY total_revenue DESC;
 
-SELECT country,
-        city, 
-        SUM(transaction_revenue) AS transaction_revenue,
-		SUM(total_transactions_revenue) AS total_revenue
-FROM all_sessions
-WHERE country = 'Finland'
-GROUP BY country,
-        city,
-        transaction_revenue,
-		total_transactions_revenue
-ORDER BY total_revenue DESC;
-
-SELECT country,
-        city, 
-        SUM(transaction_revenue) AS transaction_revenue,
-		SUM(total_transactions_revenue) AS total_revenue
-FROM all_sessions
-WHERE country = 'Mexico'
-GROUP BY country,
-        city,
-        transaction_revenue,
-		total_transactions_revenue
-ORDER BY total_revenue DESC;
-
-SELECT country,
-        city, 
-        SUM(transaction_revenue) AS transaction_revenue,
-		SUM(total_transactions_revenue) AS total_revenue
-FROM all_sessions
-WHERE country = 'Brazil'
-GROUP BY country,
-        city,
-        transaction_revenue,
-		total_transactions_revenue
-ORDER BY total_revenue DESC;
-
 Answer: 
-After running those queries and trying filtering the country value with the WHERE condition, it was noted that USA (USD$ 1,015,480,000 and Canada (USD ) had a a higer total revenue, whereas other countries such as Finland, Mexico and Brazil were shown as had none. Also, the cities of each country which genereated the total amount revenue where Atlanta (USD$ 747,000,000), Sunnyvale (USD$ 649,240,000) among others with no information on the dataset; and Toronto (USD$ 82,160,000) and New York (USD$ 67,990,000), in Canada.
+After running those queries and trying filtering the country value with the WHERE condition, it was noted that USA (USD$ 13,154,170,000), Israel, Australia, Canada and Switzerland were the five countries with the higher total revenue. Also, the cities of each country which genereated the total amount revenue where Sunnyvale and Atlanta, in the USA; and Toronto and New York, in Canada.
 
 --X--
 
