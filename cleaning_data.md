@@ -1,25 +1,35 @@
 ## Data cleaning: What issues will you address by cleaning the data?
 
+
 ##### This is a summary of the issues that were addressed during the data cleaning:
 
-##### 1. Initially, it is important to understand the data and to see if it really does make sense. For that first part, I retrieved some data and started to have a look at them to see if I can understand a little bit more about it.
 
-##### 2. After exploring the data, I had the impression that most of the columns had missing, empty or NULL values. Then, I started to filtering columns to identify the NULL values. This step tooked most of my hours and involved:
+1. Initially, it is important to understand the data and to see if it really does make sense. For that first part, I retrieved some data and started to have a look at them to see if I can understand a little bit more about it.
+
+
+2. After exploring the data, I had the impression that most of the columns had missing, empty or NULL values. Then, I started to filtering columns to identify the NULL values. This step tooked most of my hours and involved:
+
+
 ##### 2.1 cleaning up `NULL` or empty values, especially from `all_sessions` and `analytics` tables, 
 ##### 2.2 removing the excess of zeros of the `unit_price` column - which had its name altered to `unit_cost` (from `analytics` table),
 ##### 2.3 deleting some columns with no values added, such as: `search_keyword`, `product_refund_amount`, `product_variant`, `item_quantity`, `item_revenue` - all of them were from `all_sessions` table, and the "user_id" column, from "analytics" table, was also deleted because it only had null values.
-##### 2.4 Besides that, some columns with repetead values were deleted (e.g 1).
+##### 2.4 Besides that, some columns with repetead values were deleted (e.g the 1 values).
 
-##### 3. Part of the data cleaning involved using the `CAST` function to check the `datatype` in `SELECT` statements to run some queries before altering the datatype of some columns. Also, because of that part of the data cleaning, a new table called "price" was created after within already the `FLOAT` datatype which helped me to perform the correction of the `unit_cost` and `product_price` values;
 
-##### 4. Also, the process of `renaming` some columns with SQL queries was also performed. Even thought I did a bit of cleaning in the spreadsheets before (e.g. double and single quotes were removed and also some columns renamed there in order to change the column table names in a more consistent naming convention before importing them to the `PgAdmin`), other columns had their names changed afterwards when needed. Besides, I tried to preserve the `naming convetion` between the tables database.
+3. Part of the data cleaning involved using the `CAST` function to check the `datatype` in `SELECT` statements to run some queries before altering the datatype of some columns. Also, because of that part of the data cleaning, a new table called "price" was created after within already the `FLOAT` datatype which helped me to perform the correction of the `unit_cost` and `product_price` values;
 
-##### 5. Then, I made sure there were common keys between the tables and created a column with a foreing key in the `price` table (just as an addendum the name of this table is changed to the plural prices during the QA; more is explained there). 
 
-##### 6. Also, even though I noticed that some of the values between the columsn weren't matching from similar columns in other tables, I found better to maintain them. This also lead me to think that most of them could be randomly put together.
+4. Also, the process of `renaming` some columns with SQL queries was also performed. Even thought I did a bit of cleaning in the spreadsheets before (e.g. double and single quotes were removed and also some columns renamed there in order to change the column table names in a more consistent naming convention before importing them to the `PgAdmin`), other columns had their names changed afterwards when needed. Besides, I tried to preserve the `naming convetion` between the tables database.
+
+
+5. Then, I made sure there were common keys between the tables and created a column with a foreing key in the `price` table (just as an addendum the name of this table is changed to the plural prices during the QA; more is explained there). 
+
+
+6. Also, even though I noticed that some of the values between the columsn weren't matching from similar columns in other tables, I found better to maintain them. This also lead me to think that most of them could be randomly put together.
 
 
 ## Queries: what queries were used to clean up the data? 
+
 
 These were the queries mostly used to clean up the data followed by comments (the queries to create the tables initially in the PgAdmin weren't added here):
 
@@ -490,7 +500,7 @@ ALTER TABLE products
 ;
 
 
---X--
+
 
 
 

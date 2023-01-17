@@ -50,7 +50,7 @@ SELECT *
     WHERE full_visitor_id IS NOT NULL;
 ````
 
-##### By running those 2 queries, it is noted that there are many rows with empty values. In other words, the output doesn't match. There are 2,112,746 rows in total in the all_sessions table, whereas there are 15134 rows with values associated with a `full_visitor_id`. The reason why the `full_visitor_id` was considered is because I would like to understand the story behing every visit at the company's website in order to create a profile of their users. This inconsistency must be addressed and another cleaning should be done. On the other hand, by running the query below, I could see that the output of the `full_visitor_id` and the `visit_id` values matched, therefore the full_visitor_id and visit_id are important values to be considered when performing our analysis as they could give us the same output (values are consistent and distributed):
+##### By running those 2 queries, it is noted that there are many rows with empty values. In other words, the output didn't match. There are 2,112,746 rows in total in the all_sessions table, whereas there are 15134 rows with values associated with a `full_visitor_id`. The reason why the `full_visitor_id` was considered is because I would like to understand the story behing every visit at the company's website in order to create a profile of their users as most of the data showed that the customers only clicked once in the site and almost were never buying anything. This inconsistency must be addressed and another cleaning should be done. On the other hand, by running the query below, I could see that the output of the `full_visitor_id` and the `visit_id` values matched, therefore the full_visitor_id and visit_id are important values to be considered when performing our analysis as they could give us the same output (values are consistent and distributed):
 
 
 ```SQL
@@ -67,6 +67,6 @@ WHERE visit_id IS NOT NULL;
 
 ```SQL
 SELECT COUNT(DISTINCT full_visitor_id) FROM (
-    SELECT )
+                                            SELECT 
 
 

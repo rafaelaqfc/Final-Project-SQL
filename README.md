@@ -9,54 +9,25 @@ Steps to follow:
 1. Extract data (import the spreadsheets of 5 tables from ecommerce database to PgAdmin)
 all_sessions spreadsheet:
 
+1. Extract data and load it into the database (import the spreadsheets of 5 tables from ecommerce database to PgAdmin)
+Challenges with the .csv file which had to be converted into the .csvUTF8 because the last is delimitted by commas.
+Every table was created manually with SQL queries. I also tried to do my first data cleaning there by renaming already the columns and changing the datatypes while creating them.
 
+3. Clean, transform and analyze data
+First of all, I had a look at the raw data in the spreadsheets to see how it was organized, formatted and structured. It was checked the columns and rows and if they were consistently organized (e.g. such as the number of columns and their data type and which ones were filled out against the ones were with missing values or null). 
 
-productRefundAmount empty
-productQuantity empty
-productReveneu empty
-itemQuantity empty
-itemRevenue empty
-transactionRevenue
-transactionId
-eCommerceAction_option
+Also, it was removed double and single quotes and columsn renamed with underscores in order to have more readability. This means that during this first step I spend some time exploring the raw data and doing a bit of cleaning before importing the files in the .csv-UTF8 file and loading the data in my database. Also, all the tables were created with scripting SQL.
 
-analytics spreadsheet
-
-
-
-userid empty
-units_sold empty
-timeonsite empty
-revenue empty
-
-products spreadsheet
-
-
-no column has a null value or is empty
-
-sales_by_sku
-
-
-no column has a null value or is empty
-
-sales_record
-
-
-As we know, just having a look at the results of my queries is not enough to confirm that our data is correct to be analyzed. So, our QA (Quality Assurance) strategies involved:
-  
 I started by cleaning up the table names by renaming them with underscores and making them consistently.
+deleting columns
+Eliminating null values
+eliminating some with duplicate values as well (1...)
 
-2. Clean, transform and analyze data
-First of all, I had a look at the raw data in the spreadsheets to see how it was organized, formatted and structured. It was checked the columns and rows and if they were consistently organized (e.g. such as the number of columns and their data type and which ones were filled out against the ones were with missing values or null). Also, it was removed double and single quotes and columsn renamed with underscores in order to have more readability. This means that during this first step I spend some time exploring the raw data and doing a bit of cleaning before importing the files in the .csv-UTF8 file and loading the data in my database. Also, all the tables were created with scripting SQL.
+analyzed the data from different questions...
 
-UTF8csv file converted
+4. Develop and implement a QA process to validate transformed data against raw data
+As we know, just having a look at the results of my queries is not enough to confirm that our data is correct to be analyzed. So, our QA (Quality Assurance) strategies involved:
 
-Second, I created some hypothesis of my research based on what is my main interest on this data. 
-In the second place, 
-
-3. Load data into a database
-
-4, Develop and implement a QA process to validate transformed data against raw data
 So, checking the number of columns and names after running a query, performing some statistical analysis were some of the strategies we used as part of our QA, writing desciptive comments before running our queries and finally making the queries readable (uppercased keywords, use aliases for columns, witespaces, tried identation and quering queries in separated blocks), testing unit queries separated first and then integrated with others afterwards. Also, those questions were posed as part of the QA process:
 
 Are the results expected? Are the count of columns and rowns expected? Also, are my counts before and after joining tables expected and checked with the tables count originally?
@@ -81,3 +52,29 @@ I used CAST function and after created a table with its new data type already. .
 
 ## Future Goals
 (what would you do if you had more time?)
+
+
+
+all_sessions spreadsheet:
+productRefundAmount empty
+productQuantity empty
+productReveneu empty
+itemQuantity empty
+itemRevenue empty
+transactionRevenue
+transactionId
+eCommerceAction_option
+
+analytics spreadsheet
+userid empty
+units_sold empty
+timeonsite empty
+revenue empty
+
+products spreadsheet
+no column has a null value or is empty
+
+sales_by_sku
+no column has a null value or is empty
+
+sales_record
