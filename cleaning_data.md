@@ -29,7 +29,7 @@
 #### 5. Then, I made sure there were common keys between all the tables and created a column with a foreing key in the `price` table (just as an addendum the name of this table is changed to the plural `prices` during the QA; more is explained there what happen after). 
 <br/>
 
-#### 6. Finally, even though I noticed that some of the values between simlar columns weren't matching with other tables, I found better to maintain them. This also lead me to think that most of data from the demo dataset could be randomly put together. My approach would be to understand the relations that they could create when put together.
+#### 6. Finally, even though I noticed that some of the values between similar columns weren't matching with other tables, I found better to maintain them. This also lead me to think that most of data from the demo dataset could be randomly put together. My approach would be to understand the relations that they could create when put together.
 <br/>
 
 ## *Queries*: what queries were used to clean up the data? 
@@ -389,7 +389,7 @@ ORDER BY country;
 
 <br/>
 
--- *After checking the columns `unit_cost` and `product_price` their values were updated to a better reader type format:*  
+-- *After checking the columns `unit_cost` and `product_price`, their values were updated to a better reader type format:*  
 
 <br/>
 

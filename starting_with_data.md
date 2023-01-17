@@ -1,8 +1,9 @@
 ### Starting with data
+<br/>
 
 *Question 1: What is the average amount spent per unit product price?*
 
---Trying to make sense of the average amount of the unit price.
+-- This question came out because I was trying to make sense of the average amount of the `unit_cost` and `product_cost` to see if there are any parameters between these two variables:
 
 ```SQL
 SELECT AVG(unit_cost / 10000) AS avg_unit_cost
