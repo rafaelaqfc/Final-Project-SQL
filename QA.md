@@ -65,4 +65,8 @@ WHERE visit_id IS NOT NULL;
 
 ##### After doing that, it was noted that the data still has lots of duplicate and `NULL` values. Therefore, it must be cleaned and validated again in order to gain quality. From this process, I learned that the `QA` is not a final step of a data analysis project, but mostly a step that you come and go as you need to make your data consistent and unique. This is a good approach if you are seeking for more accurate results.
 
+```SQL
+SELECT COUNT(DISTINCT full_visitor_id) FROM (
+    SELECT )
+
 
