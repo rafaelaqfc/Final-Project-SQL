@@ -31,8 +31,6 @@
 
 ## *Queries*: what queries were used to clean up the data? 
 
-<br/>
-
 #### These were the queries mostly used to clean up the data followed by comments (the queries to create the tables initially in the `PgAdmin` weren't added here):
 
 <br/> 
