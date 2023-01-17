@@ -45,7 +45,7 @@
 
 <br/> 
 
--- *First, it was checked the information of the `all_sessions` table to see if it matched with the raw data in the spreadsheet (for example, the raw data of this table had 32 columns and 15134 rows)*:
+- First, it was checked the information of the `all_sessions` table to see if it matched with the raw data in the spreadsheet (for example, the raw data of this table had 32 columns and 15134 rows):
 
 <br/>
 
@@ -65,11 +65,11 @@ GROUP BY channel_grouping
 		,v2_product_category 
 ORDER BY country
 LIMIT 20;
-````
+```
 
 <br/>
 
--- *Second, it was performed the same query, but with the other tables: `analytics` was matched with 14 columns and 1048574 rows, `products` was matched with 7 columns and 1092 rows, `sales_record` with 8 columns and 454 rows, and `sales_by_sku` with 2 columns and 462 rows. This means their output matched with the ones imported from the spreadsheets):*
+- Second, it was performed the same query, but with the other tables: `analytics` was matched with 14 columns and 1048574 rows, `products` was matched with 7 columns and 1092 rows, `sales_record` with 8 columns and 454 rows, and `sales_by_sku` with 2 columns and 462 rows. This means their output matched with the ones imported from the spreadsheets):
 
 <br/>
 
@@ -97,10 +97,10 @@ FROM sales_by_sku;
 
 SELECT COUNT(*)  
 FROM sales_by_sku;
-````
+```
 <br/>
 
--- *Third, in order to identify if there were any `NULL `values in our tables, it was used the `COUNT(*)` function again, but now to check the `NULL` value rows followed by the `WHERE` filtering clause:*
+- Third, in order to identify if there were any `NULL `values in our tables, it was used the `COUNT(*)` function again, but now to check the `NULL` value rows followed by the `WHERE` filtering clause:
 
 <br/>
 
@@ -148,11 +148,11 @@ WHERE transaction_id IS NOT NULL;
 SELECT COUNT(ecommerce_action_option) AS ecommerce_action_option
 FROM all_sessions
 WHERE ecommerce_action_option IS NOT NULL;	
-````
+```
 
 <br/>
 
- -- *Forth, it was deleted some columns with empty values in all rows from the table `all_sessions` (only the ones which had 90% of `NULL` values):*
+ - Forth, it was deleted some columns with empty values in all rows from the table `all_sessions` (only the ones which had 90% of `NULL` values):
 
  <br/>
 
@@ -164,11 +164,11 @@ ALTER TABLE public.all_sessions
                 ,item_quantity
                 ,item_revenue
 ;                
-````
+```
 
 <br/>
 
--- *Afterwards, it was checked the possibility of changing the rows that were `NULL` in the columns which had some data filled out along them. This was done with the `COALESCE` function, firstly, and then with the `UPDATE` table function. Then, it was filled out the rows whose data type was an integer with `0` and a `string` `N/A` with the ones that were `VARCHAR` data type:*
+- Afterwards, it was checked the possibility of changing the rows that were `NULL` in the columns which had some data filled out along them. This was done with the `COALESCE` function, firstly, and then with the `UPDATE` table function. Then, it was filled out the rows whose data type was an integer with `0` and a `string` `N/A` with the ones that were `VARCHAR` data type:
 
 <br/>
 
@@ -200,11 +200,11 @@ WHERE transaction_id IS NULL;
 SELECT COALESCE(product_quantity , 0)
 FROM all_sessions
 WHERE product_quantity IS NULL;
-````
+```
 
 <br/>
 
--- *With this analyse, part of the cleaning was proceded and it was possible to visualize a cleaner table with the queries below (for example, 81 rows were filled out with `0` to substitute the NULL in the `total_revenue_amount` column in the `all_sessions` table), but so much more was done under the other columns:*
+- With this analyse, part of the cleaning was proceded and it was possible to visualize a cleaner table with the queries below (for example, 81 rows were filled out with `0` to substitute the NULL in the `total_revenue_amount` column in the `all_sessions` table), but so much more was done under the other columns:
 
 <br/>
 
@@ -236,11 +236,11 @@ WHERE transaction_id IS NULL;
 UPDATE all_sessions  
 SET product_quantity = 0   
 WHERE product_quantity IS NULL;
-````
+```
 
 <br/>
 
--- *From that on, it was needed to check and clean up also the `analytics` table:*
+- From that on, it was needed to check and clean up also the `analytics` table:
 
 <br/>
 
@@ -272,11 +272,11 @@ DROP COLUMN user_id;
 
 SELECT *
 FROM analytics;
-````
+```
 
 <br/>
 
--- *Again, along that table (`analytics`), it was used the `UPDATE` function to write the integer `0` in the rows previously marked as `NULL` in the column` `units_sold`, initially, and in other columns such as `bounces` and `revenue` (the queries were done one by one in order to better visualize the columns):*
+- Again, along that table (`analytics`), it was used the `UPDATE` function to write the integer `0` in the rows previously marked as `NULL` in the column` `units_sold`, initially, and in other columns such as `bounces` and `revenue` (the queries were done one by one in order to better visualize the columns):
 
 <br/>
 
@@ -308,11 +308,11 @@ WHERE transaction_id IS NULL;
 UPDATE all_sessions  
 SET product_quantity = 0   
 WHERE product_quantity IS NULL;
-````
+```
 
 <br/>
 
--- *And, just to confirm if the modifications were done, I always use the `SELEC` statement after to retrieve the output of the table:*
+- And, just to confirm if the modifications were done, I always use the `SELEC` statement after to retrieve the output of the table:
 
 <br/>
 
@@ -323,7 +323,7 @@ FROM analytics;
 
 <br/>
 
--- *Then, I came back to the columns names of some tables to check them again if they would need to be renamed in a more consistent way (remember that I had renamed them already before creating the tables in the `PgAdmin`, so this was a second check to rename some of them in case it was needed):*
+- Then, I came back to the columns names of some tables to check them again if they would need to be renamed in a more consistent way (remember that I had renamed them already before creating the tables in the `PgAdmin`, so this was a second check to rename some of them in case it was needed):
 
 <br/>
 
@@ -348,11 +348,11 @@ FROM all_sessions;
 	
 ALTER TABLE public.all_sessions
 RENAME COLUMN v2_product_category TO product_category; 	
-````
+```
 
 <br/>
 
--- *Also, it was cleaned up the excess of zeros of the old `unit_price` column already set up as `unit_cost` from `analytics` (it looks like it was added an irregular amount of zeros in each unit price of the product). Those queries were tried and retrieved the same results:*
+- Also, it was cleaned up the excess of zeros of the old `unit_price` column already set up as `unit_cost` from `analytics` (it looks like it was added an irregular amount of zeros in each unit price of the product). Those queries were tried and retrieved the same results:
 
 <br/>
 
@@ -395,11 +395,11 @@ GROUP BY s.country
 	,a.unit_cost
 	,a.revenue
 ORDER BY country;
-````
+```
 
 <br/>
 
--- *After checking the columns `unit_cost` and `product_price`, their values were updated to a better reader type format:*  
+- After checking the columns `unit_cost` and `product_price`, their values were updated to a better reader type format:  
 
 <br/>
 
@@ -424,11 +424,11 @@ SET product_price = product_price / 1000000;
 
 SELECT product_price 
 FROM all_sessions;
-````
+```
 
 <br/>
 
--- *Obs.: As I ran into some issues with my query above which was ran twice by mistake  - I learned the PgAdmin does commit every time we execute a query) - a new table titled `price` with the columns `unit_cost` and `product_cost` (previously called `unit_price` and `product_price`) was created in the spreadsheets to be imported again to redo my mistake. After creating the new table called `price` with those columns, I added to it 2 keys: the `full_visitor_id` (as a primary key) and `product_sku` (as a foreign key) with the `INSERT INTO` statement:*
+- As I ran into some issues with my query above which was ran twice by mistake  - I learned the PgAdmin does commit every time we execute a query) - a new table titled `price` with the columns `unit_cost` and `product_cost` (previously called `unit_price` and `product_price`) was created in the spreadsheets to be imported again to redo my mistake. After creating the new table called `price` with those columns, I added to it 2 keys: the `full_visitor_id` (as a primary key) and `product_sku` (as a foreign key) with the `INSERT INTO` statement:
 
 <br/>
 
@@ -481,11 +481,11 @@ ADD COLUMN product_sku VARCHAR;
 INSERT INTO price(product_sku)
 SELECT product_sku
 FROM sales_by_sku;
-````
+```
 
 <br/>
 
--- *By joining these tables to visualize their values and the way the prices were formatted, I noticed some `NULL` values that weren't noticed before under `unit_cost` and `revenue` columns. They didn't have much of rows with `NULL` values and I thought about replacing them with a 0 at first, but as I was not sure about this changing yet, I left it for now. I don't want to drop a column just because it has a `NULL` value if I believe that this `NULL` could mean somenting:*
+- By joining these tables to visualize their values and the way the prices were formatted, I noticed some `NULL` values that weren't noticed before under `unit_cost` and `revenue` columns. They didn't have much of rows with `NULL` values and I thought about replacing them with a 0 at first, but as I was not sure about this changing yet, I left it for now. I don't want to drop a column just because it has a `NULL` value if I believe that this `NULL` could mean somenting:
 
 <br/>
 
@@ -506,11 +506,11 @@ FROM products;
 SELECT COUNT(sentiment_score)
 FROM products
 WHERE sentiment_score IS NOT NULL;
-````
+```
 
 <br/>
 
--- Finally, I noticed some columns had the same value in every row and it looked like they wouldn't make any difference for this project (they might be important to other ones, but it seems that not for this one). Due to that, I decided to drop some more of them in the `all_sessions` table, such as the ones below: 
+- Finally, I noticed some columns had the same value in every row and it looked like they wouldn't make any difference for this project (they might be important to other ones, but it seems that not for this one). Due to that, I decided to drop some more of them in the `all_sessions` table, such as the ones below: 
 
 <br/>
 
@@ -582,11 +582,11 @@ GROUP BY p.sku
 	
 ALTER TABLE products
 RENAME COLUMN sku to product_sku;
-````
+```
 
 <br/>
 
--- *After finishing this data cleaning, I decided to stop it for now and start to move forward into analyse otherwise the cleaning would never seems to end, because it looks like as a cyclic process.*
+- After finishing this data cleaning, I decided to stop it for now and start to move forward into analyse otherwise the cleaning would never seems to end, because it looks like as a cyclic process.
 
 
 
