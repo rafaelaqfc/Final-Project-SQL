@@ -2,17 +2,16 @@
 <br/>
     
 **Question 1: Which cities and countries have the highest level of transaction revenues on the site?**
-
 <br/>
 
-SQL Queries:
+*SQL Queries:*
 
 ```SQL
 SELECT * 
-    FROM all_sessions;
+FROM all_sessions;
 
 SELECT COUNT(country) AS country_count 
-    ,country    
+    ,country
     ,MAX(total_transactions_revenue / 1000) 
 FROM all_sessions
 GROUP BY country
@@ -31,10 +30,10 @@ SELECT MAX(total_transactions_revenue)
 FROM all_sessions;
 
 SELECT units_sold 
-        ,revenue 
+    ,revenue 
 FROM analytics
 GROUP BY units_sold 
-        ,revenue
+    ,revenue
 ORDER BY revenue DESC;
 
 SELECT country 
@@ -42,27 +41,31 @@ SELECT country
     ,MAX(total_transactions_revenue)
 FROM all_sessions
 GROUP BY country 
-            ,city 
-            ,total_transactions_revenue
+    ,city 
+    ,total_transactions_revenue
 ORDER BY total_transactions_revenue DESC;
 
 SELECT country 
-        ,city
-        ,MAX(total_transactions_revenue)
+    ,city
+    ,MAX(total_transactions_revenue)
 FROM all_sessions
 WHERE country = 'United States'
 GROUP BY country 
-            ,city 
-        ,total_transactions_revenue
+    ,city 
+    ,total_transactions_revenue
 ORDER BY total_transactions_revenue DESC;
+````
+<br/>
 
-Answer:
-After trying some of the queries above, I found that the top 10 countries with the highest total transactions revenue were: United States, Israel, Australia, Canada, Switzerlad, Uganda, Montenegro, Venezuela, Cambodia and Sweden. In regards of the cities, these were the top 10: Atlanta, Sunnyvale, Tel Aviv-Yafo, Los Angeles, Sydney, Seatlle, Chicago, Palo Alto and San Francisco. However, it is important to note that the row with the MAX amount of total_transactions_revenue didn't have the city names available (they were missing values).
+*Answer:*
+-- After trying some of the queries above, I found that the top 10 countries with the highest total transactions revenue were: United States, Israel, Australia, Canada, Switzerlad, Uganda, Montenegro, Venezuela, Cambodia and Sweden. In regards of the cities, those were the top 10: Atlanta, Sunnyvale, Tel Aviv-Yafo, Los Angeles, Sydney, Seatlle, Chicago, Palo Alto and San Francisco. Although these were the outputs retrieved and matched by the different queries above (they might be repetitive, but this was done to confirm if they were accurate), it is important to note that the 1rst row retrieved with the `MAX` amount of `total_transactions_revenue` didn't have the city names available (they were missing values).
+<br/>
 
 **Question 2: What is the average number of products ordered from visitors in each city and country?**
 
-SQL Queries:
+*SQL Queries:*
 
+```SQL
 SELECT country 
         ,city 
         ,AVG(product_quantity)
@@ -83,9 +86,10 @@ GROUP BY country
         ,product_quantity
 ORDER BY product_quantity DESC
 LIMIT 10;
-````
+```
+<br/>
 
-Answer: 
+*Answer:*
 I tried both queries just to make sure if the results would be the same. As I did the clean up of the NULL values of the `product_quantity` column, this filtering condition wouldn't be mandatory in this case. So, the average products ordered from visitors in each city and country pointed to us an inexact answer: first, we have the United States (with some of the missing city values) which leaded the average of products ordered, with the average of 65, and, after, the United States is shown up again (with another group of missing cities) with the average bought of 50. Following USA, we had Spain (Madri) with the average of products ordered by 10 and other cities of USA, such as Salem, Atlanta, New York and Houston as the ones with the higher average products ordered by their visitors.  
 
 **Question 3: Is there any pattern in the types (product categories) of products ordered from visitors in each city and country?**

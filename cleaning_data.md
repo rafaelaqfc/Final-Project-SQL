@@ -14,7 +14,7 @@
 #### 2. After exploring the data, it was noticed that most of the columns had missing, empty or `NULL` values. Then, I started to filtering columns to identify the `NULLs`. This step tooked most of my hours and involved the substeps below:
 <br/>
 
-### 2.1 cleaning up `NULL` or empty values, especially from `all_sessions` and `analytics` tables, 
+#### 2.1 cleaning up `NULL` or empty values, especially from `all_sessions` and `analytics` tables, 
 #### 2.2 removing the excess of zeros of the `unit_price` column which also had its name altered to `unit_cost` (this column is from `analytics` table),
 #### 2.3 deleting some columns with no values at all added (they were all blank), such as: `search_keyword`, `product_refund_amount`, `product_variant`, `item_quantity`, `item_revenue` (all of them were from `all_sessions` table), and the `user_id` column, from `analytics` table, was also deleted because it only had NULL values.
 #### 2.4 Besides that, some columns with repetead values were deleted (such as columns with only the `1` value).
@@ -30,18 +30,15 @@
 <br/>
 
 #### 6. Finally, even though I noticed that some of the values between simlar columns weren't matching with other tables, I found better to maintain them. This also lead me to think that most of data from the demo dataset could be randomly put together. My approach would be to understand the relations that they could create when put together.
-
 <br/>
 
 ## *Queries*: what queries were used to clean up the data? 
-
 <br/>
-#### These were the queries mostly used to clean up the data followed by comments (the queries to create the tables initially in the `PgAdmin` weren't added here):
 
+#### These were the queries mostly used to clean up the data followed by comments (the queries to create the tables initially in the `PgAdmin` weren't added here):
 <br/> 
 
 -- *First, it was checked the information of the `all_sessions` table to see if it matched with the raw data in the spreadsheet (for example, the raw data of this table had 32 columns and 15134 rows)*:
-
 <br/>
 
 ```SQL
