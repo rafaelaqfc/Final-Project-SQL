@@ -90,7 +90,7 @@ LIMIT 10;
 <br/>
 
 *Answer:*
-I tried both queries just to make sure if the results would be the same. As I did the clean up of the NULL values of the `product_quantity` column, this filtering condition wouldn't be mandatory in this case. So, the average products ordered from visitors in each city and country pointed to us an inexact answer: first, we have the United States (with some of the missing city values) which leaded the average of products ordered, with the average of 65, and, after, the United States is shown up again (with another group of missing cities) with the average bought of 50. Following USA, we had Spain (Madri) with the average of products ordered by 10 and other cities of USA, such as Salem, Atlanta, New York and Houston as the ones with the higher average products ordered by their visitors.  
+I tried both queries just to make sure if the results would be the same. As I did the clean up of the `NULL` values of the `product_quantity` column, this filtering condition wouldn't be mandatory in this case. So, the average products ordered from visitors in each city and country pointed to us an inexact answer: first, we have the United States (with some of the missing city values) which leaded the average of products ordered, with the average of 65, and, after, the United States is shown up again (with another group of missing cities) with the average bought of 50. Following USA, we had Spain (Madri) with the average of products ordered by 10 and other cities of USA, such as Salem, Atlanta, New York and Houston as the ones with the higher average products ordered by their visitors.  
 
 **Question 3: Is there any pattern in the types (product categories) of products ordered from visitors in each city and country?**
 
