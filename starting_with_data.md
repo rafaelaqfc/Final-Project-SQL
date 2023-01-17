@@ -3,10 +3,9 @@
 <br/>
 
 *Question 1: What is the average amount spent per unit product price?*
-
 <br/>
 
--- *This question came out because I was trying to make sense of the average amount of the `unit_cost` and `product_cost` to see if there are any parameters between these two variables:*
+- This question came out because I was trying to make sense of the average amount of the `unit_cost` and `product_cost` to see if there are any parameters between these two variables:
 
 <br/>
 
@@ -38,9 +37,7 @@ As the average of the `unit_cost` didn't make sense to me at first - the column 
 
 *Question 2: Is there a relationship between a costumer profile, their products bought and the average price of them?* 
 
-<br/>
-
--- *Now, I am looking at the relationship between the costumer, the product that they bought and the average of the price of the product bought.* 
+- Now, I am looking at the relationship between the costumer, the product that they bought and the average of the price of the product bought. 
 
 <br/>
 
@@ -103,7 +100,7 @@ ORDER BY product_cost DESC;
 
 *Answer:*
 
-From that on, it was possible to see that the customer with the 'visit_id' value of '1497154760' spent U$D 298 and U$D 109.99 in products sold by the ecommerce company. This customer came out to my curiosity because he/she had the higher buy on the company. Also, after I tried to run more queries to grasp more information about this customer:
+From that on, it was possible to see that the customer with the 'visit_id' value of `1497154760` spent U$D 298 and U$D 109.99 in two products sold by the ecommerce company. This customer came out to my curiosity because he/she had the higher buy on the company. Also, after I tried to run more queries to grasp more information about this customer:
 
 <br/>
 
@@ -127,7 +124,7 @@ ORDER BY purchase_date DESC;
 ```
 <br/>
 
--- *However, no information was possible to retrieve. Then, I decided to run one more query to see if any information was available:*
+However, no information was possible to retrieve. Then, I decided to run one more query to see if any information was available:
 
 <br/>
 
@@ -144,15 +141,13 @@ WHERE a.visit_id = '1497154760';
 ```
 <br/>
 
--- *With this query it was possible to retrieve some information about this customer, such as: is (1) channeled in an `organic search` group, (2) not social engaged, and (3) has the `full_visitor_id` value of `5.07878E+16`.*
+With this query it was possible to retrieve some information about this customer, such as: is (1) channeled in an `organic search` group, (2) not social engaged, and (3) has the `full_visitor_id` value of `5.07878E+16`.
 
 <br/>
 
 *Question 3: Is there a relationship between the sentiment of a general costumer and the product bought?* 
 
-<br/>
-
--- *Now, I am trying to analyze if there is a relationship that could be tracked down between the sentiment of a common costumer in regards of the product they bought:*
+- Now, I am trying to analyze if there is a relationship that could be tracked down between the sentiment of a common costumer in regards of the product they bought:
 
 <br/>
 
@@ -175,7 +170,8 @@ LIMIT 10;
 <br/>
 
 *Answer:*
--- It looks like the product `name` `Women's V-Neck Tee Charcoal` is the one highlighted. Even though it has same `sentiment score` and `sentiment magnitude` given by others, it is the one with a higher amount of orders (4 units). Therefore, this made me to think that the value of the variable `total_ordered` was fundamental to analyze this data and show up the information with being more consumed by their customers and, probably, more likeable by them.
+
+ It looks like the product `name` `Women's V-Neck Tee Charcoal` is the one highlighted. Even though it has same `sentiment score` and `sentiment magnitude` given by others, it is the one with a higher amount of orders (4 units). Therefore, this made me to think that the value of the variable `total_ordered` was fundamental to analyze this data and show up the information with being more consumed by their customers and, probably, more likeable by them.
 
 
 

@@ -40,11 +40,12 @@ At this moment, I started to explore the data with the questions contained in th
 4. Develop and implement a QA process to validate transformed data against raw data
 <br/>
 
-As we know, just having a look at the results of my queries is not enough to confirm that our data is correct to be analyzed. So, my QA (Quality Assurance) strategies were not only done in the end of this project, but throughout my analyze (step 3) when I performed different queries to check if the output of the tables and columns would match with each other. In an overall way, my QA invovled:
-4.1 checking the number of columns and names after running a query, besides their output,
-4.2 performing some statistical analysis,
-4.3 writing desciptive comments before running our queries,
-4.4. making the queries readable (uppercased keywords, uses aliases for columns, witespaces, identation and quering queries in separated moments or blocks). 
+As we know, just having a look at the results of my queries is not enough to confirm that our data is correct to be analyzed. So, my QA (Quality Assurance) strategies were not only done in the end of this project, but throughout my analyze (step 3) when I performed different queries to check if the output of the tables and columns would match with each other. In an overall way, my QA involved:
+
+- checking the number of columns and names after running a query, besides their output,
+- performing some statistical analysis,
+- writing desciptive comments before running our queries,
+- making the queries readable (uppercased keywords, uses aliases for columns, witespaces, identation and quering queries in separated moments or blocks). 
 
 <br/>
 
