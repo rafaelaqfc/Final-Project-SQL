@@ -73,7 +73,7 @@ Are there rowms owith NULLs value?
 ## Challenges 
 One of the first challengess I encountered in this assignment was related to the .csv file which has to be imported to my workbench. After a while, the solution was to convert to a .csvUTF-8 file to be properly imported in my workbench, because this second one is delimetted by commas.
 
-The second challengee was related to the short time to do the analyze of the database: I spent most of my time trying to undertand the type of the file before importing the spreadsheets and, after that, in the cleaning. Also, some NULL values were hidden and I could only see them through joining tables, for example, when I thought that I was done the cleaning. Therefore, it looks like the cleaning almost never ends!
+The second challengee was related to the short time to do the analyze of the database: I spent most of my time trying to undertand the type of the file before importing the spreadsheets and, after that, in the cleaning. Also, some NULL values were hidden and I could only see them through joining tables, for example, when I thought that I was done the cleaning. Therefore, it looks like the cleaning almost never ends! So, patience is a virtude here because changes are never good enough. In order to find a quality data, the approach must be open to possible changes and iterations along the way. Also, I noticed there is some hierarchy in the data to be understood, but I couldn't find the time to do it yet.
 
 Random data and it looked like that didn't have any semantic content at all
 

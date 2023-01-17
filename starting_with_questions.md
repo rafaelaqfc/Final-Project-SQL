@@ -186,7 +186,7 @@ GROUP BY product_category,
 ORDER BY product_quantity DESC;
 
 Answer:
-I found this question very similar to the 3rd, therefore I obtained the same results from the question above. This query showed that USA has the higher amount of home office (notebooks and journals) and reusable bags ordered by their customers. I also tried to check the "untis_sold" column in the "analytics" table, but it gave mostly 0 products sold. So, coming back to our first query of this question, it was also possible to find that the most sold product in Spain is a specific type of socks with cat design. Even with the other queries which ran with a filtering condition of a specific country, they couldn't provide significative information about the top products from their countries.
+I found this question very similar to the 3rd, therefore I obtained the same results from the question above. This query showed that USA has the higher amount of home office (notebooks and journals) and reusable bags ordered by their customers. I also tried to check the "untis_sold" column in the "analytics" table, but it gave mostly 0 products sold. So, coming back to our first query of this question, it was also possible to find that the most sold product in Spain was a specific type of socks with cat design. Even with the other queries which ran with a filtering condition of a specific country, they couldn't provide significative information about the top products from their countries.
 
 **Question 5: Can we summarize the impact of revenue generated from each city/country?**
 
