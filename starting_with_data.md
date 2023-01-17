@@ -98,7 +98,7 @@ GROUP BY visit_number
 		,product_cost 
 		unit_cost
 ORDER BY product_cost DESC;
-````
+```
 <br/>
 
 *Answer:*
@@ -172,6 +172,7 @@ GROUP BY name
 ORDER BY sentiment_magnitude DESC
 LIMIT 10;
 ```
+<br/>
 
 *Answer:*
 -- It looks like the product `name` `Women's V-Neck Tee Charcoal` is the one highlighted. Even though it has same `sentiment score` and `sentiment magnitude` given by others, it is the one with a higher amount of orders (4 units). Therefore, this made me to think that the value of the variable `total_ordered` was fundamental to analyze this data and show up the information with being more consumed by their customers and, probably, more likeable by them.

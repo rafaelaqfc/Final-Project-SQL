@@ -1,18 +1,16 @@
 ## *Data cleaning*: what issues will you address by cleaning the data?
 
-
----
+<br>
 
 #### This is a summary of the issues that were addressed during the data cleaning:
 
-*****
 <br/>
 
-#### 1. Initially, I thought it would be important to understand the data and to see if it really does make sense. For that first part, I retrieved some data by using `SELECT` statments and started to have a look at them to see if I can understand a little bit more about it.
+#### **1**. Initially, I thought it would be important to understand the data and to see if it really does make sense. For that first part, I retrieved some data by using `SELECT` statments and started to have a look at them to see if I can understand a little bit more about it.
 
 <br/>
 
-#### 2. After exploring the data, it was noticed that most of the columns had missing, empty or `NULL` values. Then, I started to filtering columns to identify the `NULLs`. This step tooked most of my hours and involved the substeps below:
+#### **2**. After exploring the data, it was noticed that most of the columns had missing, empty or `NULL` values. Then, I started to filtering columns to identify the `NULLs`. This step tooked most of my hours and involved the substeps below:
 
 <br/>
 
@@ -23,19 +21,19 @@
 
 <br/>
 
-#### 3. Part of the data cleaning involved using the `CAST` function to check the `datatype` with `SELECT` statements to run some queries before altering the datatype of some columns. Also, because of that part of the data cleaning, a new table called `price` was created after within already the `FLOAT` datatype which helped me to perform the correction of the `unit_cost` and `product_price` column values (see the file `schema-1rst.png`);
+#### **3**. Part of the data cleaning involved using the `CAST` function to check the `datatype` with `SELECT` statements to run some queries before altering the datatype of some columns. Also, because of that part of the data cleaning, a new table called `price` was created after within already the `FLOAT` datatype which helped me to perform the correction of the `unit_cost` and `product_price` column values (see the file `schema-1rst.png`);
 
 <br/>
 
-#### 4. Also, the process of `renaming` some columns with SQL queries was performed. Even thought I did a bit of cleaning in the spreadsheets before (such as by removing double and single quotes and renaming some columns in the spreadsheets following a consistent naming convention before importing them to the `PgAdmin`), other columns had their names changed again afterwards when needed. 
+#### **4**. Also, the process of `renaming` some columns with SQL queries was performed. Even thought I did a bit of cleaning in the spreadsheets before (such as by removing double and single quotes and renaming some columns in the spreadsheets following a consistent naming convention before importing them to the `PgAdmin`), other columns had their names changed again afterwards when needed. 
 
 <br/>
 
-#### 5. Then, I made sure there were common keys between all the tables and created a column with a foreing key in the `price` table (just as an addendum the name of this table is changed to the plural `prices` during the QA; more is explained there what happen after). 
+#### **5**. Then, I made sure there were common keys between all the tables and created a column with a foreing key in the `price` table (just as an addendum the name of this table is changed to the plural `prices` during the QA; more is explained there what happen after). 
 
 <br/>
 
-#### 6. Finally, even though I noticed that some of the values between similar columns weren't matching with other tables, I found better to maintain them. This also lead me to think that most of data from the demo dataset could be randomly put together. My approach would be to understand the relations that they could create when put together.
+#### **6**. Finally, even though I noticed that some of the values between similar columns weren't matching with other tables, I found better to maintain them. This also lead me to think that most of data from the demo dataset could be randomly put together. My approach would be to understand the relations that they could create when put together.
 
 <br/>
 
