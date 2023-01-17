@@ -47,10 +47,10 @@ SELECT *
 ```
 <br/>
 
-#### By running those 2 queries, it is noted that there are many rows with empty values. In other words, the output didn't match. There are 2,112,746 rows in total in the `all_sessions` table, whereas there are 15134 rows with values associated with a `full_visitor_id`. The reason why the `full_visitor_id` was considered as an important value is because I would like to understand the story behing every visit at the company's website in order to create a `profile of their users` as most of the data showed that the customers only clicked once in the site and almost were never buying anything. I found this unusual for an ecommerce cmpany. So, this inconsistency must be addressed and another cleaning should be done. 
+- By running those 2 queries, it is noted that there are many rows with empty values. In other words, the output didn't match. There are 2,112,746 rows in total in the `all_sessions` table, whereas there are 15134 rows with values associated with a `full_visitor_id`. The reason why the `full_visitor_id` was considered as an important value is because I would like to understand the story behing every visit at the company's website in order to create a `profile of their users` as most of the data showed that the customers only clicked once in the site and almost were never buying anything. I found this unusual for an ecommerce cmpany. So, this inconsistency must be addressed and another cleaning should be done. 
 <br/>
 
-#### Also, by running the query below, I could see that the output of the `full_visitor_id` and the `visit_id` values matched, therefore the `full_visitor_id` and `visit_id` are important values to be considered when performing our analysis as they could give us the same output (meaning that the values are consistent and distributed when considering the search by the `full_visitor_id` and the `visit_id`):
+- Also, by running the query below, I could see that the output of the `full_visitor_id` and the `visit_id` values matched, therefore the `full_visitor_id` and `visit_id` are important values to be considered when performing our analysis as they could give us the same output (meaning that the values are consistent and distributed when considering the search by the `full_visitor_id` and the `visit_id`):
 
 <br/>
 
