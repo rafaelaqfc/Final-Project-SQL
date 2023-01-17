@@ -77,5 +77,7 @@ The third challenge was trying to understand the value and importance behind the
 
 The forth challenge is related to the cleaning. When I thought that I was done the cleaning, I noticed that the cleaning almost never ends! So, patience is a virtude here because changes amight be never good enough. Similarly, it is hard to find a quality data, so the approach must be open to possible changes and iterations along all the steps of the data cleaning and transformin. Also, I noticed there is some hierarchy in the data to be understood, but I couldn't find the time to do it yet.
 
+<br/>
+
 ## Future Goals
 If I had more time, first of all I would have used more functions to clean up the data, such as `TRIM`, `PAD`, `ROUND`, among others. Also, I would have approached to the data with less time pressure and absolutely I would have come up with more questions and insights to be adressed and found in the story of this dataset.
