@@ -1,14 +1,20 @@
-## Data cleaning: What issues will you address by cleaning the data?
+## *Data cleaning*: what issues will you address by cleaning the data?
 
+
+---
 
 ##### This is a summary of the issues that were addressed during the data cleaning:
 
+*****
 
-1. Initially, it is important to understand the data and to see if it really does make sense. For that first part, I retrieved some data and started to have a look at them to see if I can understand a little bit more about it.
 
+##### 1. Initially, it is important to understand the data and to see if it really does make sense. For that first part, I retrieved some data and started to have a look at them to see if I can understand a little bit more about it.
 
-2. After exploring the data, I had the impression that most of the columns had missing, empty or NULL values. Then, I started to filtering columns to identify the NULL values. This step tooked most of my hours and involved:
+<br/>
 
+##### 2. After exploring the data, I had the impression that most of the columns had missing, empty or NULL values. Then, I started to filtering columns to identify the NULL values. This step tooked most of my hours and involved:
+
+<br/>
 
 ##### 2.1 cleaning up `NULL` or empty values, especially from `all_sessions` and `analytics` tables, 
 ##### 2.2 removing the excess of zeros of the `unit_price` column - which had its name altered to `unit_cost` (from `analytics` table),
@@ -316,16 +322,20 @@ SELECT s.country, s.product_price, a.unit_cost
 	ON s.visit_id = a.visit_id
 	GROUP BY s.country, s.product_price, a.unit_cost;
 
-SELECT s.country, 
-	s.product_price / 1000000 AS product_price, 
-	s.product_revenue, 
-	a.unit_cost / 1000000 AS unit_cost, 
-	a.revenue 
-	FROM all_sessions s
-	LEFT JOIN analytics a
-	ON s.visit_id = a.visit_id
-	GROUP BY s.country, s.product_price, s.product_revenue, a.unit_cost, a.revenue
-	ORDER BY country;
+SELECT s.country 
+	,s.product_price / 1000000 AS product_price 
+	,s.product_revenue 
+	,a.unit_cost / 1000000 AS unit_cost 
+	,a.revenue 
+FROM all_sessions s
+LEFT JOIN analytics a
+ON s.visit_id = a.visit_id
+GROUP BY s.country 
+	,s.product_price 
+	,s.product_revenue
+	,a.unit_cost
+	,a.revenue
+ORDER BY country;
 
 -- After checking the columns "unit_cost" and "product_price" their values were updated to a better reader type format:  
 
